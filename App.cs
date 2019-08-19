@@ -7,10 +7,10 @@ namespace WireMockServer
         private readonly IWireMockService _service;
         private readonly ILogger _logger;
         
-        public App(IWireMockService service, ILogger logger)
+        public App(IWireMockService service, ILoggerFactory factory)
         {
             _service = service;
-            _logger = logger;
+            _logger = factory.CreateLogger("WireMock .NET");
         }
 
         public void Run()

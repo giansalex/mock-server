@@ -21,14 +21,13 @@ namespace WireMockServer
                 .AddEnvironmentVariables() // <-- this is needed to to override settings via the Azure Portal App Settings
                 .Build();
 
-            // Add LoggerFactory
-            var factory = new LoggerFactory();
-            services.AddSingleton(factory
-                .AddConsole(configuration.GetSection("Logging"))
-                .AddDebug()
-            );
+            services.AddLogging(builder => {
+                builder.AddConfiguration(configuration.GetSection("Logging"));
+                builder.AddConsole();
+                builder.AddDebug();
+            });
 
-            services.AddSingleton(factory.CreateLogger("WireMock.Net Logger"));
+            // services.AddSingleton(factory.CreateLogger("WireMock.Net Logger"));
 
             // Add access to generic IConfigurationRoot
             services.AddSingleton(configuration);

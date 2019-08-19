@@ -51,12 +51,12 @@ namespace WireMockServer
             }
         }
 
-        public WireMockService(ILogger logger, IFluentMockServerSettings settings)
+        public WireMockService(ILoggerFactory factory, IFluentMockServerSettings settings)
         {
-            _logger = logger;
+            _logger = factory.CreateLogger("WireMock .NET");;
             _settings = settings;
 
-            _settings.Logger = new Logger(logger);
+            _settings.Logger = new Logger(_logger);
         }
 
         public void Run()
